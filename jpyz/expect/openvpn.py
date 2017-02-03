@@ -103,7 +103,6 @@ def main(arg):
             # ".min"
         )
     fileName = "client.ovpn"
-    # command = "ls -lA"
     command = "openvpn"
 
     spawn.sendline("{} \"{}\"".format(command, os.path.join(filePath, fileName)))
