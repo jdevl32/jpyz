@@ -75,6 +75,7 @@ def main(arg):
     passphrase = secure.get("passphrase", None)
     spawn = pexpect.spawnu("su")
     pattern = None # "(?i)Password: "
+    # todo: !!! need to handle bad password/passphrase !!!
     value = common.expectSendPassword(spawn=spawn, password=password, pattern=pattern)
 
     # spawn.sendline("echo {}".format(jpyzCommon.formatTraceString(descriptor="value", value=value)))
