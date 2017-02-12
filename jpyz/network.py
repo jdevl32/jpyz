@@ -21,9 +21,7 @@ def getInterfaceIPAddress(interface=None):
     :rtype: str
     """
 
-    # _cmd_ = "ifconfig"
-    # _cmd_ = "ifconfig {}".format(interface)
-    # common.trace(value=_cmd_)
+    # todo: constant(s)
     return \
         pexpect.run \
             (
