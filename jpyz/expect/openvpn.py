@@ -30,7 +30,6 @@ def _success(spawn):
             (
                 [
                     "Connected, IP Address={ipaddr}".format \
-                    # "{ipaddr}".format \
                         (
                             ipaddr=\
                                 network.getInterfaceIPAddress(interface=Default.NETWORK_TUNNEL_INTERFACE)
@@ -40,9 +39,7 @@ def _success(spawn):
                 ]
             )
         )
-    # spawn.setecho(False)
     spawn.interact()
-    # spawn.setecho(False)
 
 
 def _timeout(spawn):
@@ -63,24 +60,14 @@ def main(arg):
     :return:
     """
 
-    # todo: constant(s)
-    homeSSID = None
-
-    if network.isSSIDHome(homeSSID):
-        print("Safe at home!  :)")
-        return
-
     secure = _secure_.get(__file__)
+    # todo: constant(s)
     password = secure.get("password", None)
     passphrase = secure.get("passphrase", None)
     spawn = pexpect.spawnu("su")
-    pattern = None # "(?i)Password: "
+    pattern = None
     # todo: !!! need to handle bad password/passphrase !!!
     value = common.expectSendPassword(spawn=spawn, password=password, pattern=pattern)
-
-    # spawn.sendline("echo {}".format(jpyzCommon.formatTraceString(descriptor="value", value=value)))
-    # jpyzCommon.trace(descriptor="value", value=value)
-    
     filePath = os.path.join\
         (
             default.getLinuxSystemConfigPath()
@@ -92,23 +79,12 @@ def main(arg):
             "Dell-XPS-L702X"
             ,
             "85270B"
-            # ,
-            # "2016"
-            # ,
-            # "06"
-            # ,
-            # "20"
-            # ,
-            # "1219"
-            # ,
-            # ".min"
         )
     fileName = "client.ovpn"
     command = "openvpn"
 
     spawn.sendline("{} \"{}\"".format(command, os.path.join(filePath, fileName)))
 
-    # pattern = "(?i)Enter Private Key Password: "
     pattern = None
     value = common.expectSendPassword(spawn=spawn, password=passphrase, pattern=pattern)
     value = spawn.expect([Default.OPENVPN_SUCCESS_MESSAGE, pexpect.TIMEOUT], timeout=Default.CONNECTION_TIMEOUT)
